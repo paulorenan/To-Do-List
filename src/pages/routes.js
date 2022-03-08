@@ -1,12 +1,17 @@
 export default [
   {
     path: '/',
-    name: 'home',
-    component: () => import(/* webpackChunkName: "about" */ './Home.vue')
+    name: 'Home',
+    component: () => import('./Home.vue')
   },
   {
     path: '/login',
-    name: 'login',
-    component: () => import(/* webpackChunkName: "about" */ './LoginAuth.vue')
-  }
+    name: 'Login',
+    component: () => import('./LoginAuth.vue')
+  },
+  {
+    path: '/register',
+    name: 'Cadastrar',
+    component: () => import('./CreateUser.vue')
+  },
 ]

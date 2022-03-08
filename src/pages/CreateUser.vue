@@ -14,10 +14,17 @@
           <v-col cols="12" md="8" offset-md="2">
             <v-card>
               <v-card-title>
-                <span class="headline">Login</span>
+                <span class="headline">Cadastro</span>
               </v-card-title>
               <v-card-text>
                 <v-form ref="form">
+                  <v-text-field
+                    v-model="form.name"
+                    label="Nome"
+                    type="text"
+                    prepend-icon="mdi-account"
+                    :rules="[v => !!v || 'Nome é obrigatório']"
+                  ></v-text-field>
                   <v-text-field
                     v-model="form.email"
                     label="Email"
@@ -36,7 +43,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="login">Entrar</v-btn>
+                <v-btn color="primary" @click="login">Cadastrar</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
