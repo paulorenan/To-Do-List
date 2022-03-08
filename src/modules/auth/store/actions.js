@@ -52,3 +52,13 @@ export const ActionSignOut = ({ dispatch }) => {
   dispatch('ActionSetUser', {})
   dispatch('ActionSetToken', '') 
 }
+
+export const ActionGetTasks = ({ dispatch }) => {
+  return services.auth.getTasks().then(res => {
+    dispatch('ActionSetTasks', res.data)
+  })
+}
+
+export const ActionSetTasks = ({ commit }, payload) => {
+  commit(types.SET_TASKS, payload)
+}

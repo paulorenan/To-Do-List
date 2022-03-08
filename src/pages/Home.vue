@@ -73,7 +73,45 @@
               min-height="70vh"
               rounded="lg"
             >
-              <!--  -->
+              <v-row
+                align="center"
+                justify="center"
+              >
+                <v-col
+                  cols="12"
+                  md="8"
+                  offset-md="2"
+                  v-for="task in tasks"
+                  :key="task.id"
+                >
+                  <v-card
+                    outlined
+                    color="grey lighten-4"
+                  >
+                    <v-card-title>
+                      <span class="headline">{{ task.title }}</span>
+                    </v-card-title>
+                    <v-card-text>
+                      {{ task.description }}
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn
+                        color="primary"
+                        @click="editTask(task)"
+                      >
+                        Editar
+                      </v-btn>
+                      <v-btn
+                        color="error"
+                        @click="deleteTask(task)"
+                      >
+                        Excluir
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-col>
+              </v-row>
             </v-sheet>
           </v-col>
         </v-row>
@@ -83,12 +121,13 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
   export default {
     name: 'HomePage',
     computed: {
       ...mapState('auth', ['user']),
+      ...mapState('auth', ['tasks'])
     },
     data: () => {
       return {
@@ -102,11 +141,14 @@ import { mapState } from 'vuex'
       }
     },
     created () {
-      this.getUser()
+      this.getTasks()
     },
     methods: {
-      getUser () {
-      }
+      ...mapActions('auth', ['ActionGetTasks']),
+      async getTasks() {
+        await this.ActionGetTasks()
+        console.log(this.tasks);
+      },
     },
     components: {
     },

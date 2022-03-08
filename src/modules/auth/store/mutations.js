@@ -6,5 +6,8 @@ export default {
   },
   [types.SET_TOKEN] (state, token) {
     state.token = token
-  }
+  },
+  [types.SET_TASKS] (state, tasks) {
+    state.tasks = tasks
+  },
 }
