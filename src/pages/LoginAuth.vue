@@ -49,10 +49,13 @@ export default {
   },
   methods: {
     ...mapActions('auth', ['ActionDoLogin']),
-    login () {
-      this.ActionDoLogin(this.form).then(res => {
-        console.log(res.data)
-      })
+    async login () {
+      try{
+      await this.ActionDoLogin(this.form)
+      this.$router.push('/')
+      }catch(e){
+        alert(e.data ? e.data.error : 'Erro ao fazer login')
+      }
     },
   }
 }
