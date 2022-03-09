@@ -3,7 +3,6 @@
     <v-app-bar
       app
       color="white"
-      flat
     >
       <v-container class="py-0 fill-height">
         <img 
@@ -31,18 +30,19 @@
           </v-btn>
       </v-container>
     </v-app-bar>
-    <v-main class="grey lighten-3 mt-5" >
-      <v-container>
-        <v-row>
+    <v-main class="grey lighten-1" >
+      <v-container class="mt-5">
+        <v-row
+          class="mx-auto"
+          justify="center"
+          align="center"
+        >
           <v-col>
             <v-sheet
-              min-height="70vh"
+              min-height="80vh"
               rounded="lg"
             >
-              <v-row
-              align="center"
-              justify="center"
-              >
+              <v-row class="mx-auto">
                 <v-col
                   cols="12"
                   md="8"
@@ -65,10 +65,7 @@
                   </v-btn>
                 </v-col>
               </v-row>
-              <v-row
-                align="center"
-                justify="center"
-              >
+              <v-row class="mx-auto">
                 <v-col
                   cols="12"
                   md="8"
@@ -160,7 +157,7 @@ import { mapState, mapActions } from 'vuex'
         if (this.$refs.form.validate()) {
         this.loading = true
         await this.ActionCreateTask(this.form)
-        this.form.description = ''
+        this.$refs.form.reset()
         this.loading = false
         }
       },

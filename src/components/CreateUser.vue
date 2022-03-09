@@ -1,38 +1,118 @@
 <template>
-  <v-card>
-    <v-card-title>
-      <span class="headline">Cadastro</span>
-    </v-card-title>
-    <v-card-text>
-      <v-form ref="form">
-        <v-text-field
-          v-model="form.name"
-          label="Nome"
-          type="text"
-          prepend-icon="mdi-account"
-          :rules="[v => !!v || 'Nome é obrigatório']"
-        ></v-text-field>
-        <v-text-field
-          v-model="form.email"
-          label="Email"
-          type="email"
-          prepend-icon="mdi-email"
-          :rules="[v => !!v || 'E-mail é obrigatório']"
-        ></v-text-field>
-        <v-text-field
-          v-model="form.password"
-          label="Senha"
-          type="password"
-          prepend-icon="mdi-lock"
-          :rules="[v => !!v || 'Senha é obrigatório']"
-        ></v-text-field>
-      </v-form>
-    </v-card-text>
-    <v-card-actions>
-      <v-spacer></v-spacer>
-      <v-btn color="primary" @click="login">Cadastrar</v-btn>
-    </v-card-actions>
-  </v-card>
+  <v-app id="inspire">
+    <v-app-bar
+      app
+      color="white"
+    >
+      <v-container class="py-0 fill-height">
+        <img 
+          :src="imagem"
+          alt="Keep"
+          class="mx-auto rounded-circle"
+          style="width: 50px; height: 50px;"
+        />
+        <span
+          class="title"
+          style="font-size: 1.5rem; font-weight: bold; margin-left: 20px; margin-right: 10px;"
+        >{{ user.name }}</span>
+        <v-btn
+          text
+        >
+          Perfil
+        </v-btn>
+        <v-spacer></v-spacer>
+          <v-btn
+            icon
+            @click="logout"
+          >
+            Sair
+            <v-icon>mdi-logout</v-icon>
+          </v-btn>
+      </v-container>
+    </v-app-bar>
+    <v-main class="grey lighten-1" >
+      <v-container class="mt-5">
+        <v-row
+          class="mx-auto"
+          justify="center"
+          align="center"
+        >
+          <v-col>
+            <v-sheet
+              min-height="80vh"
+              rounded="lg"
+            >
+              <v-row
+              align="center"
+              justify="center"
+              >
+                <v-col
+                  cols="12"
+                  md="8"
+                  offset-md="2"
+                >
+                  <v-form ref="form">
+                    <v-text-field
+                      v-model="form.description"
+                      label="Tarefa"
+                      type="text"
+                      :rules="taskRules"
+                    />
+                  </v-form>
+                  <v-btn
+                    color="primary"
+                    @click="createTask"
+                    :loading="loading"
+                  >
+                    Adicionar Tarefa
+                  </v-btn>
+                </v-col>
+              </v-row>
+              <v-row
+                align="center"
+                justify="center"
+              >
+                <v-col
+                  cols="12"
+                  md="8"
+                  offset-md="2"
+                  v-for="task in tasks"
+                  :key="task.id"
+                >
+                  <v-card
+                    outlined
+                    color="grey lighten-4"
+                  >
+                    <v-card-title>
+                      <span class="headline">{{ task.title }}</span>
+                    </v-card-title>
+                    <v-card-text>
+                      {{ task.description }}
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn
+                        color="primary"
+                        @click="editTask(task)"
+                      >
+                        Editar
+                      </v-btn>
+                      <v-btn
+                        color="error"
+                        @click="deleteTask(task)"
+                      >
+                        Excluir
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-col>
+              </v-row>
+            </v-sheet>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
