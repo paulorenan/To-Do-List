@@ -38,13 +38,12 @@
                       {{ task.description }}
                     </v-card-text>
                     <v-card-actions>
+                      <span style="font-size:13px ">
+                        Criado em {{ new Date(task.createdAt).toLocaleString('pt-BR') }}
+                      </span>
                       <v-spacer/>
-                      <v-btn color="primary" @click="editTask(task)">
-                        Editar
-                      </v-btn>
-                      <v-btn color="error" @click="deleteTask(task)">
-                        Excluir
-                      </v-btn>
+                      <PopUpEditar :task="task" style="margin-right:10px"/>
+                      <PopUpExcluir :task="task"/>
                     </v-card-actions>
                   </v-card>
                 </v-col>
@@ -60,6 +59,8 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import HeaderComp from '../components/HeaderComp.vue'
+import PopUpEditar from '../components/PopUpEditar.vue'
+import PopUpExcluir from '../components/PopUpExcluir.vue'
 
   export default {
     name: 'HomePage',
@@ -67,7 +68,9 @@ import HeaderComp from '../components/HeaderComp.vue'
       ...mapState('auth', ['tasks'])
     },
     components: {
-      HeaderComp
+      HeaderComp,
+      PopUpEditar,
+      PopUpExcluir,
     },
     data: () => {
       return {
@@ -78,6 +81,7 @@ import HeaderComp from '../components/HeaderComp.vue'
         taskRules: [
           v => !!v || 'Tarefa é obrigatória',
         ],
+        tarefas: [],
       }
     },
     created () {

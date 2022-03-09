@@ -2,6 +2,7 @@
 import services from '@/http'
 import * as storage from '../storage'
 import * as types from './mutation-types'
+import { http } from '../../../http'
 
 export const ActionDoLogin = ({dispatch}, payload) => {
   return services.auth.login(payload).then(res => {
@@ -63,7 +64,7 @@ export const ActionSignOut = ({ dispatch }) => {
 
 export const ActionGetTasks = ({ dispatch }) => {
   return services.auth.getTasks().then(res => {
-    dispatch('ActionSetTasks', res.data)
+    dispatch('ActionSetTasks', res.data.sort((a, b) => b.id - a.id))
   })
 }
 
@@ -73,6 +74,18 @@ export const ActionSetTasks = ({ commit }, payload) => {
 
 export const ActionCreateTask = ({ dispatch }, payload) => {
   return services.auth.createTask(payload).then(res => {
+    dispatch('ActionGetTasks', res.data)
+  })
+}
+
+export const ActionUpdateTask = ({ dispatch }, payload) => {
+  return http.put(`task/${payload.id}`, payload).then(res => {
+    dispatch('ActionGetTasks', res.data)
+  })
+}
+
+export const ActionDeleteTask = ({ dispatch }, payload) => {
+  return http.delete(`task/${payload}`).then(res => {
     dispatch('ActionGetTasks', res.data)
   })
 }
