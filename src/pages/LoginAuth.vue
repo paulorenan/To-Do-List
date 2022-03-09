@@ -23,20 +23,21 @@
                     label="Email"
                     type="email"
                     prepend-icon="mdi-email"
-                    :rules="[v => !!v || 'E-mail é obrigatório']"
+                    :rules="emailRules"
                   ></v-text-field>
                   <v-text-field
                     v-model="form.password"
                     label="Senha"
                     type="password"
                     prepend-icon="mdi-lock"
-                    :rules="[v => !!v || 'Senha é obrigatório']"
+                    :rules="passwordRules"
                   ></v-text-field>
                 </v-form>
               </v-card-text>
               <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="primary" @click="login">Entrar</v-btn>
+                <v-btn color="primary" @click="login" :loading="loading">Entrar</v-btn>
+                <v-spacer/>
+                <span>Não possui uma conta? <router-link to="/register">Cadastre-se</router-link></span>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -55,17 +56,28 @@ export default {
         email: '',
         password: '',
       },
+      emailRules: [
+        v => !!v || 'E-mail é obrigatório',
+        v => /.+@.+/.test(v) || 'E-mail inválido',
+      ],
+      passwordRules: [
+        v => !!v || 'Senha é obrigatória'
+      ],
+      loading: false,
     }
   },
   methods: {
     ...mapActions('auth', ['ActionDoLogin']),
     async login () {
+      this.loading = true
       try{
       await this.ActionDoLogin(this.form)
       this.$router.push('/')
+
       }catch(e){
         alert(e.data ? e.data.error : 'Erro ao fazer login')
       }
+      this.loading = false
     },
   }
 }

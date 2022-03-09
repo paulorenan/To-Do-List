@@ -23,27 +23,28 @@
                     label="Nome"
                     type="text"
                     prepend-icon="mdi-account"
-                    :rules="[v => !!v || 'Nome é obrigatório']"
+                    :rules="nameRules"
                   ></v-text-field>
                   <v-text-field
                     v-model="form.email"
                     label="Email"
                     type="email"
                     prepend-icon="mdi-email"
-                    :rules="[v => !!v || 'E-mail é obrigatório']"
+                    :rules="emailRules"
                   ></v-text-field>
                   <v-text-field
                     v-model="form.password"
                     label="Senha"
                     type="password"
                     prepend-icon="mdi-lock"
-                    :rules="[v => !!v || 'Senha é obrigatório']"
+                    :rules="passwordRules"
                   ></v-text-field>
                 </v-form>
               </v-card-text>
               <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="primary" @click="login">Cadastrar</v-btn>
+                <v-btn color="primary" @click="createUser" :loading="loading">Cadastrar</v-btn>
+                <v-spacer/>
+                <span>Já possui uma conta? <router-link to="/login">Entrar</router-link></span>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -59,20 +60,37 @@ export default {
   data () {
     return {
       form: {
+        name: '',
         email: '',
         password: '',
       },
+      emailRules: [
+        v => !!v || 'E-mail é obrigatório',
+        v => /.+@.+/.test(v) || 'E-mail inválido',
+      ],
+      passwordRules: [
+        v => !!v || 'Senha é obrigatória',
+        v => v.length >= 6 || 'Senha deve ter no mínimo 6 caracteres',
+      ],
+      nameRules: [
+        v => !!v || 'Nome é obrigatório'
+      ],
+      loading: false,
     }
   },
   methods: {
-    ...mapActions('auth', ['ActionDoLogin']),
-    async login () {
-      try{
-      await this.ActionDoLogin(this.form)
-      this.$router.push('/')
-      }catch(e){
-        alert(e.data ? e.data.error : 'Erro ao fazer login')
+    ...mapActions('auth', ['ActionCreateUser']),
+    async createUser () {
+      this.loading = true
+      if (this.$refs.form.validate()) {
+        try{
+          await this.ActionCreateUser(this.form)
+        this.$router.push('/')
+        }catch(e){
+          alert('Email já cadastrado')
+        }
       }
+      this.loading = false
     },
   }
 }
