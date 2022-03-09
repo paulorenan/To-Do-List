@@ -51,6 +51,7 @@ export const ActionSignOut = ({ dispatch }) => {
   storage.deleteLocalToken()
   dispatch('ActionSetUser', {})
   dispatch('ActionSetToken', '') 
+  dispatch('ActionSetTasks', [])
 }
 
 export const ActionGetTasks = ({ dispatch }) => {

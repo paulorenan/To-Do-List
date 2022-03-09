@@ -7,7 +7,7 @@ Vue.use(VueResource);
 
 const http = Vue.http;
 
-http.options.root = 'http://localhost:5432';
+http.options.root = 'https://back2dolist.herokuapp.com/';
 
 http.interceptors.push(interceptors);
 

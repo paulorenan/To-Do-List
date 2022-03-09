@@ -6,67 +6,38 @@
       flat
     >
       <v-container class="py-0 fill-height">
-        <!-- <v-avatar
-          class="mr-10"
-          color="grey darken-1"
-          size="32"
-        ></v-avatar>
-
+        <img 
+          :src="imagem"
+          alt="Keep"
+          class="mx-auto rounded-circle"
+          style="width: 50px; height: 50px;"
+        />
+        <span
+          class="title"
+          style="font-size: 1.5rem; font-weight: bold; margin-left: 20px; margin-right: 10px;"
+        >{{ user.name }}</span>
         <v-btn
-          v-for="link in links"
-          :key="link"
           text
         >
-          {{ link }}
-        </v-btn> -->
+          Perfil
+        </v-btn>
 
         <v-spacer></v-spacer>
 
-        <v-responsive max-width="260">
-          <v-text-field
-            dense
-            flat
-            hide-details
-            rounded
-            solo-inverted
-          ></v-text-field>
-        </v-responsive>
+          <v-btn
+            icon
+            @click="logout"
+          >
+            Sair
+            <v-icon>mdi-logout</v-icon>
+          </v-btn>
       </v-container>
     </v-app-bar>
 
-    <v-main class="grey lighten-3">
+    <v-main class="grey lighten-3 mt-5" >
       <v-container>
         <v-row>
-          <v-col cols="2">
-            <v-sheet rounded="lg">
-              <v-list color="transparent">
-                <v-list-item
-                  v-for="n in 5"
-                  :key="n"
-                  link
-                >
-                  <v-list-item-content>
-                    <v-list-item-title>
-                      List Item {{ n }}
-                    </v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-
-                <v-divider class="my-2"></v-divider>
-
-                <v-list-item
-                  link
-                  color="grey lighten-4"
-                >
-                  <v-list-item-content>
-                    <v-list-item-title>
-                      Refresh
-                    </v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
-            </v-sheet>
-          </v-col>
+          
 
           <v-col>
             <v-sheet
@@ -132,23 +103,30 @@ import { mapState, mapActions } from 'vuex'
     data: () => {
       return {
         drawer: false,
-        links: [
-        'Dashboard',
-        'Messages',
-        'Profile',
-        'Updates',
-      ],
+        imagem: ''
       }
     },
     created () {
       this.getTasks()
+      this.verifyImagem()
     },
     methods: {
       ...mapActions('auth', ['ActionGetTasks']),
+      ...mapActions('auth', ['ActionSignOut']),
       async getTasks() {
         await this.ActionGetTasks()
-        console.log(this.tasks);
       },
+      verifyImagem() {
+        if (this.user.image === null) {
+          this.imagem = 'https://voxnews.com.br/wp-content/uploads/2017/04/unnamed.png'
+        } else {
+          this.imagem = this.user.imagem
+        }
+      },
+      async logout() {
+        await this.ActionSignOut()
+        this.$router.push('/login')
+      }
     },
     components: {
     },
