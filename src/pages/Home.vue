@@ -21,9 +21,7 @@
         >
           Perfil
         </v-btn>
-
         <v-spacer></v-spacer>
-
           <v-btn
             icon
             @click="logout"
@@ -33,17 +31,40 @@
           </v-btn>
       </v-container>
     </v-app-bar>
-
     <v-main class="grey lighten-3 mt-5" >
       <v-container>
         <v-row>
-          
-
           <v-col>
             <v-sheet
               min-height="70vh"
               rounded="lg"
             >
+              <v-row
+              align="center"
+              justify="center"
+              >
+                <v-col
+                  cols="12"
+                  md="8"
+                  offset-md="2"
+                >
+                  <v-form ref="form">
+                    <v-text-field
+                      v-model="form.description"
+                      label="Tarefa"
+                      type="text"
+                      :rules="taskRules"
+                    />
+                  </v-form>
+                  <v-btn
+                    color="primary"
+                    @click="createTask"
+                    :loading="loading"
+                  >
+                    Adicionar Tarefa
+                  </v-btn>
+                </v-col>
+              </v-row>
               <v-row
                 align="center"
                 justify="center"
@@ -103,7 +124,14 @@ import { mapState, mapActions } from 'vuex'
     data: () => {
       return {
         drawer: false,
-        imagem: ''
+        imagem: '',
+        loading: false,
+        form: {
+          description: '',
+        },
+        taskRules: [
+          v => !!v || 'Tarefa é obrigatória',
+        ],
       }
     },
     created () {
@@ -113,6 +141,7 @@ import { mapState, mapActions } from 'vuex'
     methods: {
       ...mapActions('auth', ['ActionGetTasks']),
       ...mapActions('auth', ['ActionSignOut']),
+      ...mapActions('auth', ['ActionCreateTask']),
       async getTasks() {
         await this.ActionGetTasks()
       },
@@ -126,7 +155,15 @@ import { mapState, mapActions } from 'vuex'
       async logout() {
         await this.ActionSignOut()
         this.$router.push('/login')
-      }
+      },
+      async createTask() {
+        if (this.$refs.form.validate()) {
+        this.loading = true
+        await this.ActionCreateTask(this.form)
+        this.form.description = ''
+        this.loading = false
+        }
+      },
     },
     components: {
     },

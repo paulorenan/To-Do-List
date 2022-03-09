@@ -70,3 +70,9 @@ export const ActionGetTasks = ({ dispatch }) => {
 export const ActionSetTasks = ({ commit }, payload) => {
   commit(types.SET_TASKS, payload)
 }
+
+export const ActionCreateTask = ({ dispatch }, payload) => {
+  return services.auth.createTask(payload).then(res => {
+    dispatch('ActionGetTasks', res.data)
+  })
+}
