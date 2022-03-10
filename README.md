@@ -13,6 +13,7 @@ Um website de CRUD de tarefas e autenticação de usuario
 **Front-end:** Vue, Vuex, Vuetify, Vue-Resource e Vue-Router
 
 **Back-end:** TypeScript, TypeORM, NodeJs, Express, PostgreSQL, Supabase, JTW.
+
 [Repositorio do BackEnd](https://github.com/paulorenan/Back_ToDo)
 
 
