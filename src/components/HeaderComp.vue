@@ -5,7 +5,7 @@
   >
     <v-container class="py-0 fill-height">
       <img 
-        :src="imagem"
+        :src="user.image ? user.image : imagem"
         alt="Keep"
         class="mx-auto rounded-circle"
         style="width: 50px; height: 50px;"
@@ -14,13 +14,16 @@
         class="title"
         style="font-size: 1.5rem; font-weight: bold; margin-left: 20px; margin-right: 10px;"
       >{{ user.name }}</span>
-      <v-btn
-        text
-      >
-        Perfil
-      </v-btn>
+      <router-link to="/profile">
+        <v-btn
+          text
+        >
+          Perfil
+        </v-btn>
+      </router-link>
       <v-spacer></v-spacer>
         <v-btn
+        
           icon
           @click="logout"
         >
@@ -58,7 +61,7 @@ import { mapState, mapActions } from 'vuex'
         if (this.user.image === null) {
           this.imagem = 'https://voxnews.com.br/wp-content/uploads/2017/04/unnamed.png'
         } else {
-          this.imagem = this.user.imagem
+          this.imagem = this.user.image
         }
       },
     },

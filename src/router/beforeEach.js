@@ -9,7 +9,7 @@ export default async (to, from, next) => {
     } else {
       try {
         await store.dispatch('auth/ActionCheckToken');
-        next({ name: to.name });
+        next({ path: to.path });
       }
       catch (err) {
         next();
@@ -17,7 +17,7 @@ export default async (to, from, next) => {
     }
   } else {
     if (store.getters['auth/hasToken']) {
-      next()
+      next();
     } else {
       next({ name: 'Login' })
     }

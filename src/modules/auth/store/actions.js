@@ -89,3 +89,15 @@ export const ActionDeleteTask = ({ dispatch }, payload) => {
     dispatch('ActionGetTasks', res.data)
   })
 }
+
+export const ActionUpdateUser = ({ dispatch }, payload) => {
+  return http.put(`user`, payload).then(res => {
+    dispatch('ActionSetUser', res.data)
+  })
+}
+
+export const ActionDeleteUser = ({ dispatch }, payload) => {
+  return http.delete(`user`).then(res => {
+    dispatch('ActionSignOut')
+  })
+}

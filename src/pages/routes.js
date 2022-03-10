@@ -14,4 +14,9 @@ export default [
     name: 'Cadastrar',
     component: () => import('./CreateUser.vue')
   },
+  {
+    path: '/profile',
+    name: 'Perfil',
+    component: () => import('./ProfileUp.vue')
+  }
 ]
