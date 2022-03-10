@@ -3,11 +3,6 @@
 
 Um website de CRUD de tarefas e autenticação de usuario
 
-## Documentação
-
-[Documentação](https://link-da-documentação)
-
-
 ## Stack utilizada
 
 **Front-end:** Vue, Vuex, Vuetify, Vue-Resource e Vue-Router
