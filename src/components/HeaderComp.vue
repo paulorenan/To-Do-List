@@ -69,11 +69,6 @@ import { mapState, mapActions } from 'vuex'
           this.imagem = this.user.image
         }
       },
-      handleError(image) {
-        console.log('erro');
-        image.onerror = null;
-        image.src = 'https://voxnews.com.br/wp-content/uploads/2017/04/unnamed.png'
-      }
     },
   }
 </script>
