@@ -6,9 +6,10 @@
     <v-container class="py-0 fill-height">
       <img 
         :src="user.image ? user.image : imagem"
-        alt="Keep"
+        alt="Usuario"
         class="mx-auto rounded-circle"
         style="width: 50px; height: 50px;"
+        v-img-fallback="imgFallback"
       />
       <span
         class="title"
@@ -46,6 +47,10 @@ import { mapState, mapActions } from 'vuex'
     data: () => {
       return {
         imagem: '',
+        imgFallback: {
+          loading: 'https://voxnews.com.br/wp-content/uploads/2017/04/unnamed.png',
+          error: 'https://voxnews.com.br/wp-content/uploads/2017/04/unnamed.png'
+        }
       }
     },
     created () {
@@ -64,6 +69,11 @@ import { mapState, mapActions } from 'vuex'
           this.imagem = this.user.image
         }
       },
+      handleError(image) {
+        console.log('erro');
+        image.onerror = null;
+        image.src = 'https://voxnews.com.br/wp-content/uploads/2017/04/unnamed.png'
+      }
     },
   }
 </script>

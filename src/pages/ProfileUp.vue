@@ -13,6 +13,7 @@
                     alt="Keep"
                     class="mx-auto rounded-circle"
                     style="width: 100px; height: 100px;"
+                    v-img-fallback="imgFallback"
                   />
                   <v-form ref="form">
                     <v-text-field
@@ -83,6 +84,10 @@ export default {
       form: {
         name: '',
         image: '',
+      },
+      imgFallback: {
+        loading: 'https://voxnews.com.br/wp-content/uploads/2017/04/unnamed.png',
+        error: 'https://voxnews.com.br/wp-content/uploads/2017/04/unnamed.png'
       },
       nameRules: [
         v => !!v || 'Nome é obrigatório',
